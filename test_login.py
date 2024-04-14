@@ -23,7 +23,7 @@ class Test_Login:
     def test_login(self): 
         
        logo=self.waitForElementVisible((By.CSS_SELECTOR,"body > div.header > div.header-main > div > div.header-logo > a > img"))
-       assert logo.is_displayed(), "Logo görüntülenmiyor."                                
+       assert logo.is_displayed(), "Logo görüntülenmiyor." #logonun görünlendiğini kontrol etmek için kullanılır.                               
        
        tabs = self.driver.find_elements(By.CSS_SELECTOR, "div-header-menu-container ul li a") #birden fazla tab menü olduğu için find_elements locater'ını kullandım.
        expected_menu = ["YENİ GELENLER","İNDİRİMLİ ÜRÜNLER","ÇOK SATANLAR","SERİ SONU","ÜST GİYİM","ALT GİYİM","EŞOFMAN - PİJAMA","ELBİSE-TULUM","ÇOCUK-BEBEK","AYAKKABI","AKSESUAR","İÇ GİYİM","ERKEK"]  # Beklenen tab menü isimleri
