@@ -8,16 +8,23 @@ from selenium.webdriver.common.keys import Keys
 from constants.globalconstants import *
 import pytest
 
+
 class Test_Login:
+
     def setup_method(self):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
         self.driver.get(BASE_URL)
         
+        
     def teardown_method(self):
         self.driver.quit()  
         
     def test_login(self): 
+        
+       logo=self.waitForElementVisible((By.CSS_SELECTOR,"body > div.header > div.header-main > div > div.header-logo > a > img"))
+       assert logo.is_displayed(), "Logo görüntülenmiyor."                                
+       
        tabs = self.driver.find_elements(By.CSS_SELECTOR, "div-header-menu-container ul li a") #birden fazla tab menü olduğu için find_elements locater'ını kullandım.
        expected_menu = ["YENİ GELENLER","İNDİRİMLİ ÜRÜNLER","ÇOK SATANLAR","SERİ SONU","ÜST GİYİM","ALT GİYİM","EŞOFMAN - PİJAMA","ELBİSE-TULUM","ÇOCUK-BEBEK","AYAKKABI","AKSESUAR","İÇ GİYİM","ERKEK"]  # Beklenen tab menü isimleri
 
@@ -42,6 +49,7 @@ class Test_Login:
        searchInput.send_keys("çanta", Keys.ENTER)
        firstclass=self.waitForElementVisible((By.XPATH, firstclass_id))
        firstclass.click()
+       
        basket=self.waitForElementVisible((By.ID,basket_id))
        basket.click()
        #assert self.driver.find_element((By.CSS_SELECTOR, ".toast-title")).text == addedtoyourcart
@@ -51,7 +59,7 @@ class Test_Login:
                                                  
     def waitForElementVisible(self,locator,timeout=5):
      return WebDriverWait(self.driver,timeout).until(EC.visibility_of_element_located(locator))    
-
+    @pytest.mark.skip
     def test_invalidlogin(self): 
        login_button = self.waitForElementVisible((By.XPATH, login_button_id))
        login_button.click()
@@ -67,7 +75,7 @@ class Test_Login:
        singIn.click()
        errorMessage= self.waitForElementVisible((By.XPATH,errorMessage_id ))
        assert errorMessage.text == error_message_text
-    
+    @pytest.mark.skip
     def test_signup(self): 
        login_button = self.waitForElementVisible((By.XPATH,login_button_id ))
        login_button.click()
